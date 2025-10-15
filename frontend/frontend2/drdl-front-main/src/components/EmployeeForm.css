@@ -1,0 +1,91 @@
+.employee-form {
+  width: 100%;
+  max-width: 1080px;
+  padding: 2.5rem 2rem;
+  margin: 2em auto;
+  background: #f9fafb;
+  border-radius: 22px;
+  box-shadow: 0 8px 36px rgba(50,70,140,0.11);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem 2rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.form-section {
+  grid-column: 1 / -1;
+  margin: 18px 0 24px 0;
+  font-weight: 700;
+  color: #3455a7;
+  font-size: 1.35em;
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+
+.employee-form label {
+  font-weight: 600;
+  color: #32415d;
+  margin-bottom: 0.26em;
+  font-size: 1.08em;
+}
+
+.employee-form input,
+.employee-form select {
+  padding: 0.79em 1.2em;
+  font-size: 1.11em;
+  border-radius: 9px;
+  border: 1.2px solid #b9d0e7;
+  background: #f9fcff;
+  margin-bottom: 0.16em;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.employee-form input:focus, .employee-form select:focus {
+  border: 2px solid #3869e6;
+  box-shadow: 0 2px 6px #b2d4f9;
+}
+
+.employee-form span {
+  color: #d62828;
+  font-size: 0.94em;
+  margin-top: 0.12em;
+  display: block;
+}
+
+.employee-form button {
+  grid-column: 2 / 3;
+  background: linear-gradient(90deg, #4e9af1 0%, #7fd8b6 100%);
+  color: #1d2235;
+  padding: 1.18em 4em;
+  font-size: 1.16em;
+  font-weight: 700;
+  box-shadow: 0 2px 9px #cde8f7;
+  border: none;
+  border-radius: 13px;
+  margin: 2em 0 1em 0;
+  cursor: pointer;
+}
+
+.employee-form button:hover {
+  background: linear-gradient(90deg, #7fd8b6 0%, #4e9af1 100%);
+  color: #244;
+}
+
+@media (max-width: 1200px) {
+  .employee-form {
+    max-width: 90vw;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .employee-form {
+    grid-template-columns: 1fr;
+    max-width: 98vw;
+    padding: 1rem;
+    gap: 1rem;
+  }
+}
