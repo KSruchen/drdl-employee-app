@@ -1,43 +1,51 @@
 .employee-form {
   width: 100%;
-  max-width: 1080px;
-  padding: 2.5rem 2rem;
+  max-width: 900px;
+  padding: 2em 2em;
   margin: 2em auto;
   background: #f9fafb;
   border-radius: 22px;
   box-shadow: 0 8px 36px rgba(50,70,140,0.11);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem 2rem;
   box-sizing: border-box;
   overflow-x: hidden;
 }
 
 .form-section {
-  grid-column: 1 / -1;
-  margin: 18px 0 24px 0;
+  margin: 18px 0 14px 0;
   font-weight: 700;
   color: #3455a7;
-  font-size: 1.35em;
+  font-size: 1.32em;
   letter-spacing: 0.03em;
   text-align: center;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem 2rem;
+  margin-bottom: 22px;
+}
+@media (max-width: 900px) {
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .employee-form label {
   font-weight: 600;
   color: #32415d;
-  margin-bottom: 0.26em;
-  font-size: 1.08em;
+  margin-bottom: 0.1em;
+  font-size: 1em;
 }
 
 .employee-form input,
 .employee-form select {
-  padding: 0.79em 1.2em;
-  font-size: 1.11em;
-  border-radius: 9px;
-  border: 1.2px solid #b9d0e7;
+  padding: 0.65em 1em;
+  font-size: 1.05em;
+  border-radius: 7px;
+  border: 1.1px solid #b9d0e7;
   background: #f9fcff;
-  margin-bottom: 0.16em;
+  margin-bottom: 0.11em;
   box-sizing: border-box;
   width: 100%;
 }
@@ -49,23 +57,24 @@
 
 .employee-form span {
   color: #d62828;
-  font-size: 0.94em;
-  margin-top: 0.12em;
+  font-size: 0.92em;
+  margin-top: 0.05em;
   display: block;
 }
 
 .employee-form button {
-  grid-column: 2 / 3;
   background: linear-gradient(90deg, #4e9af1 0%, #7fd8b6 100%);
   color: #1d2235;
-  padding: 1.18em 4em;
-  font-size: 1.16em;
+  padding: 1em 4em;
+  font-size: 1.12em;
   font-weight: 700;
   box-shadow: 0 2px 9px #cde8f7;
   border: none;
-  border-radius: 13px;
-  margin: 2em 0 1em 0;
+  border-radius: 11px;
+  margin: 1.2em auto 0 auto;
   cursor: pointer;
+  width: max-content;
+  display: block;
 }
 
 .employee-form button:hover {
@@ -73,19 +82,7 @@
   color: #244;
 }
 
-@media (max-width: 1200px) {
-  .employee-form {
-    max-width: 90vw;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-}
-
-@media (max-width: 900px) {
-  .employee-form {
-    grid-template-columns: 1fr;
-    max-width: 98vw;
-    padding: 1rem;
-    gap: 1rem;
-  }
+.temp-output {
+  max-width: 900px;
+  margin: 1.7em auto 0 auto;
 }
