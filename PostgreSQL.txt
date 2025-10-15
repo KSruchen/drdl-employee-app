@@ -1,0 +1,393 @@
+#PostgreSQL
+is this suitable for postgre sql
+-- Create tables
+CREATE TABLE IF NOT EXISTS directorates (
+  directorate_id INTEGER PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS departments (
+  department_id INTEGER PRIMARY KEY,
+  directorate_id INTEGER,
+  name VARCHAR(50),
+  CONSTRAINT fk_directorate FOREIGN KEY (directorate_id) REFERENCES directorates(directorate_id)
+);
+
+CREATE TABLE IF NOT EXISTS employees (
+  emp_id INTEGER PRIMARY KEY,
+  name VARCHAR(100),
+  department_id INTEGER,
+  email VARCHAR(100),
+  CONSTRAINT fk_department FOREIGN KEY (department_id) REFERENCES departments(department_id)
+);
+
+CREATE TABLE IF NOT EXISTS directors (
+  director_id INTEGER PRIMARY KEY,
+  name VARCHAR(100),
+  role VARCHAR(50),
+  directorate_id INTEGER NULL,
+  start_date DATE,
+  end_date DATE
+);
+
+CREATE TABLE IF NOT EXISTS department_heads (
+  head_id INTEGER PRIMARY KEY,
+  emp_id INTEGER,
+  department_id INTEGER,
+  start_date DATE,
+  end_date DATE,
+  CONSTRAINT fk_head_emp FOREIGN KEY (emp_id) REFERENCES employees(emp_id),
+  CONSTRAINT fk_head_dept FOREIGN KEY (department_id) REFERENCES departments(department_id)
+);
+
+CREATE TABLE IF NOT EXISTS employee_history (
+  history_id INTEGER PRIMARY KEY,
+  emp_id INTEGER,
+  role VARCHAR(100),
+  department_id INTEGER,
+  start_date DATE,
+  end_date DATE,
+  CONSTRAINT fk_hist_emp FOREIGN KEY (emp_id) REFERENCES employees(emp_id),
+  CONSTRAINT fk_hist_dept FOREIGN KEY (department_id) REFERENCES departments(department_id)
+);
+
+-- Insert directorates
+INSERT INTO directorates (directorate_id, name) VALUES (1, 'DIT') ON CONFLICT (directorate_id) DO NOTHING;
+INSERT INTO directorates (directorate_id, name) VALUES (2, 'DOI') ON CONFLICT (directorate_id) DO NOTHING;
+INSERT INTO directorates (directorate_id, name) VALUES (3, 'DOVI') ON CONFLICT (directorate_id) DO NOTHING;
+INSERT INTO directorates (directorate_id, name) VALUES (4, 'DWIT') ON CONFLICT (directorate_id) DO NOTHING;
+
+-- Insert departments under each directorate
+-- DIT
+INSERT INTO departments (department_id, directorate_id, name) VALUES (101, 1, 'SDD') ON CONFLICT (department_id) DO NOTHING;
+INSERT INTO departments (department_id, directorate_id, name) VALUES (102, 1, 'CND') ON CONFLICT (department_id) DO NOTHING;
+INSERT INTO departments (department_id, directorate_id, name) VALUES (103, 1, 'NW') ON CONFLICT (department_id) DO NOTHING;
+
+-- DOI
+INSERT INTO departments (department_id, directorate_id, name) VALUES (201, 2, 'Embedded Systems') ON CONFLICT (department_id) DO NOTHING;
+INSERT INTO departments (department_id, directorate_id, name) VALUES (202, 2, 'Security') ON CONFLICT (department_id) DO NOTHING;
+INSERT INTO departments (department_id, directorate_id, name) VALUES (203, 2, 'Quality Assurance') ON CONFLICT (department_id) DO NOTHING;
+
+-- DOVI
+INSERT INTO departments (department_id, directorate_id, name) VALUES (301, 3, 'Innovation Lab') ON CONFLICT (department_id) DO NOTHING;
+INSERT INTO departments (department_id, directorate_id, name) VALUES (302, 3, 'Automation') ON CONFLICT (department_id) DO NOTHING;
+INSERT INTO departments (department_id, directorate_id, name) VALUES (303, 3, 'Data Science') ON CONFLICT (department_id) DO NOTHING;
+
+-- DWIT
+INSERT INTO departments (department_id, directorate_id, name) VALUES (401, 4, 'Wireless') ON CONFLICT (department_id) DO NOTHING;
+INSERT INTO departments (department_id, directorate_id, name) VALUES (402, 4, 'Information Technology') ON CONFLICT (department_id) DO NOTHING;
+INSERT INTO departments (department_id, directorate_id, name) VALUES (403, 4, 'IoT') ON CONFLICT (department_id) DO NOTHING;
+
+-- DIT - SDD (20 employees)
+INSERT INTO employees VALUES (1001, 'Alice Johnson', 101, 'alice.johnson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1002, 'Bob Smith', 101, 'bob.smith@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1003, 'Carol Davis', 101, 'carol.davis@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1004, 'David Harris', 101, 'david.harris@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1005, 'Eve Martinez', 101, 'eve.martinez@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1006, 'Frank Moore', 101, 'frank.moore@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1007, 'Grace Lee', 101, 'grace.lee@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1008, 'Hannah Wilson', 101, 'hannah.wilson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1009, 'Ian Clark', 101, 'ian.clark@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1010, 'Jack Lewis', 101, 'jack.lewis@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1011, 'Karen Walker', 101, 'karen.walker@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1012, 'Larry Young', 101, 'larry.young@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1013, 'Megan King', 101, 'megan.king@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1014, 'Nathan Scott', 101, 'nathan.scott@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1015, 'Olivia Adams', 101, 'olivia.adams@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1016, 'Paul Baker', 101, 'paul.baker@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1017, 'Quinn Carter', 101, 'quinn.carter@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1018, 'Rita Diaz', 101, 'rita.diaz@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1019, 'Steve Evans', 101, 'steve.evans@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1020, 'Tina Foster', 101, 'tina.foster@example.com') ON CONFLICT (emp_id) DO NOTHING;
+
+-- DIT - CND (20 employees)
+INSERT INTO employees VALUES (1021, 'Uma Green', 102, 'uma.green@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1022, 'Victor Hall', 102, 'victor.hall@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1023, 'Wendy Jackson', 102, 'wendy.jackson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1024, 'Xander King', 102, 'xander.king@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1025, 'Yara Lopez', 102, 'yara.lopez@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1026, 'Zane Mitchell', 102, 'zane.mitchell@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1027, 'Amy Norris', 102, 'amy.norris@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1028, 'Brian O''Neal', 102, 'brian.oneal@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1029, 'Cindy Parker', 102, 'cindy.parker@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1030, 'Dennis Quinn', 102, 'dennis.quinn@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1031, 'Ella Roberts', 102, 'ella.roberts@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1032, 'Fred Smith', 102, 'fred.smith@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1033, 'Grace Taylor', 102, 'grace.taylor@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1034, 'Henry Underwood', 102, 'henry.underwood@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1035, 'Isla Vincent', 102, 'isla.vincent@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1036, 'Jake White', 102, 'jake.white@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1037, 'Kara Xu', 102, 'kara.xu@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1038, 'Liam Young', 102, 'liam.young@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1039, 'Mia Zhang', 102, 'mia.zhang@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1040, 'Noah Allen', 102, 'noah.allen@example.com') ON CONFLICT (emp_id) DO NOTHING;
+
+-- DIT - NW (20 employees)
+INSERT INTO employees VALUES (1041, 'Olivia Baker', 103, 'olivia.baker@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1042, 'Peter Carter', 103, 'peter.carter@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1043, 'Quincy Diaz', 103, 'quincy.diaz@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1044, 'Rachel Evans', 103, 'rachel.evans@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1045, 'Steven Foster', 103, 'steven.foster@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1046, 'Tara Graham', 103, 'tara.graham@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1047, 'Ursula Hall', 103, 'ursula.hall@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1048, 'Vince Jones', 103, 'vince.jones@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1049, 'Wanda King', 103, 'wanda.king@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1050, 'Xavier Lewis', 103, 'xavier.lewis@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1051, 'Yvonne Martin', 103, 'yvonne.martin@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1052, 'Zachary Nelson', 103, 'zachary.nelson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1053, 'Amy Owens', 103, 'amy.owens@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1054, 'Brian Peterson', 103, 'brian.peterson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1055, 'Clara Quinn', 103, 'clara.quinn@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1056, 'Derek Roberts', 103, 'derek.roberts@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1057, 'Ella Stewart', 103, 'ella.stewart@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1058, 'Fred Turner', 103, 'fred.turner@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1059, 'Grace Underwood', 103, 'grace.underwood@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (1060, 'Harry Vincent', 103, 'harry.vincent@example.com') ON CONFLICT (emp_id) DO NOTHING;
+
+-- DOI - Embedded Systems (20 employees)
+INSERT INTO employees VALUES (2001, 'John Doe', 201, 'john.doe@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2002, 'Jane Smith', 201, 'jane.smith@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2003, 'Joe Black', 201, 'joe.black@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2004, 'Anna Bell', 201, 'anna.bell@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2005, 'Rick Johnson', 201, 'rick.johnson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2006, 'Sally Green', 201, 'sally.green@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2007, 'Tom Baker', 201, 'tom.baker@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2008, 'Lisa King', 201, 'lisa.king@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2009, 'Matt Lee', 201, 'matt.lee@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2010, 'Nina White', 201, 'nina.white@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2011, 'Owen Davis', 201, 'owen.davis@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2012, 'Pamela Clark', 201, 'pamela.clark@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2013, 'Quincy Thomas', 201, 'quincy.thomas@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2014, 'Rhonda Adams', 201, 'rhonda.adams@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2015, 'Steve Brooks', 201, 'steve.brooks@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2016, 'Theresa Young', 201, 'theresa.young@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2017, 'Victor Allen', 201, 'victor.allen@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2018, 'Wanda Scott', 201, 'wanda.scott@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2019, 'Xena Martin', 201, 'xena.martin@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2020, 'Yusuf Carter', 201, 'yusuf.carter@example.com') ON CONFLICT (emp_id) DO NOTHING;
+
+-- DOI - Security (20 employees)
+INSERT INTO employees VALUES (2021, 'Adam Brooks', 202, 'adam.brooks@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2022, 'Betty Wright', 202, 'betty.wright@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2023, 'Carl Evans', 202, 'carl.evans@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2024, 'Denise Foster', 202, 'denise.foster@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2025, 'Ethan Hill', 202, 'ethan.hill@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2026, 'Fiona Baker', 202, 'fiona.baker@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2027, 'George Clark', 202, 'george.clark@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2028, 'Helen Lee', 202, 'helen.lee@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2029, 'Ian Scott', 202, 'ian.scott@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2030, 'Jill Adams', 202, 'jill.adams@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2031, 'Kevin Wright', 202, 'kevin.wright@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2032, 'Linda Evans', 202, 'linda.evans@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2033, 'Mark Hill', 202, 'mark.hill@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2034, 'Nina Foster', 202, 'nina.foster@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2035, 'Oscar Baker', 202, 'oscar.baker@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2036, 'Paula Clark', 202, 'paula.clark@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2037, 'Quinn Lee', 202, 'quinn.lee@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2038, 'Rachel Scott', 202, 'rachel.scott@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2039, 'Sam Adams', 202, 'sam.adams@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2040, 'Tina Brooks', 202, 'tina.brooks@example.com') ON CONFLICT (emp_id) DO NOTHING;
+
+-- DOI - Quality Assurance (20 employees)
+INSERT INTO employees VALUES (2041, 'Umar Evans', 203, 'umar.evans@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2042, 'Vera Foster', 203, 'vera.foster@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2043, 'Walter Griffin', 203, 'walter.griffin@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2044, 'Xenia Harris', 203, 'xenia.harris@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2045, 'Yusuf King', 203, 'yusuf.king@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2046, 'Zara Lee', 203, 'zara.lee@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2047, 'Aaron Martin', 203, 'aaron.martin@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2048, 'Bella Nelson', 203, 'bella.nelson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2049, 'Charlie Oliver', 203, 'charlie.oliver@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2050, 'Diana Peterson', 203, 'diana.peterson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2051, 'Eli Quinn', 203, 'eli.quinn@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2052, 'Fiona Roberts', 203, 'fiona.roberts@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2053, 'George Scott', 203, 'george.scott@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2054, 'Hannah Thomas', 203, 'hannah.thomas@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2055, 'Isaac Walker', 203, 'isaac.walker@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2056, 'Julia Young', 203, 'julia.young@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2057, 'Kevin Zimmerman', 203, 'kevin.zimmerman@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2058, 'Laura Adams', 203, 'laura.adams@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2059, 'Mark Brown', 203, 'mark.brown@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (2060, 'Natalie Clark', 203, 'natalie.clark@example.com') ON CONFLICT (emp_id) DO NOTHING;
+
+-- DOVI - Innovation Lab (20 employees)
+INSERT INTO employees VALUES (3001, 'Chris Martin', 301, 'chris.martin@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3002, 'Patricia White', 301, 'patricia.white@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3003, 'Roberta Williams', 301, 'roberta.williams@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3004, 'James Harris', 301, 'james.harris@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3005, 'Nicole Thomas', 301, 'nicole.thomas@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3006, 'Oscar Lee', 301, 'oscar.lee@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3007, 'Pamela Clark', 301, 'pamela.clark@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3008, 'Quentin Brown', 301, 'quentin.brown@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3009, 'Rebecca Scott', 301, 'rebecca.scott@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3010, 'Sarah Green', 301, 'sarah.green@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3011, 'Thomas Young', 301, 'thomas.young@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3012, 'Uma Davis', 301, 'uma.davis@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3013, 'Victor Miller', 301, 'victor.miller@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3014, 'Wendy Brown', 301, 'wendy.brown@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3015, 'Xavier Wilson', 301, 'xavier.wilson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3016, 'Yolanda Johnson', 301, 'yolanda.johnson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3017, 'Zachary Moore', 301, 'zachary.moore@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3018, 'Amy Clark', 301, 'amy.clark@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3019, 'Brian Lee', 301, 'brian.lee@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3020, 'Christina Brown', 301, 'christina.brown@example.com') ON CONFLICT (emp_id) DO NOTHING;
+
+-- DOVI - Automation (20 employees)
+INSERT INTO employees VALUES (3021, 'David Wilson', 302, 'david.wilson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3022, 'Emily Lopez', 302, 'emily.lopez@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3023, 'Frank Taylor', 302, 'frank.taylor@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3024, 'Gina Martin', 302, 'gina.martin@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3025, 'Harry Scott', 302, 'harry.scott@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3026, 'Isabel Wright', 302, 'isabel.wright@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3027, 'Jackie Green', 302, 'jackie.green@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3028, 'Kyle Brown', 302, 'kyle.brown@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3029, 'Laura King', 302, 'laura.king@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3030, 'Mike Johnson', 302, 'mike.johnson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3031, 'Natalie Lewis', 302, 'natalie.lewis@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3032, 'Oliver Scott', 302, 'oliver.scott@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3033, 'Paula Adams', 302, 'paula.adams@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3034, 'Quentin Moore', 302, 'quentin.moore@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3035, 'Rebecca Young', 302, 'rebecca.young@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3036, 'Sam Walker', 302, 'sam.walker@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3037, 'Theresa Gonzales', 302, 'theresa.gonzales@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3038, 'Ursula Brown', 302, 'ursula.brown@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3039, 'Victor Reed', 302, 'victor.reed@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3040, 'Wendy Miller', 302, 'wendy.miller@example.com') ON CONFLICT (emp_id) DO NOTHING;
+
+-- DOVI - Data Science (20 employees)
+INSERT INTO employees VALUES (3041, 'Xander Smith', 303, 'xander.smith@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3042, 'Yvonne Johnson', 303, 'yvonne.johnson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3043, 'Zachary White', 303, 'zachary.white@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3044, 'Amy Lee', 303, 'amy.lee@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3045, 'Brandon Davis', 303, 'brandon.davis@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3046, 'Cassandra Clark', 303, 'cassandra.clark@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3047, 'Derek Hall', 303, 'derek.hall@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3048, 'Ella Martin', 303, 'ella.martin@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3049, 'Francis Scott', 303, 'francis.scott@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3050, 'Gabrielle Brown', 303, 'gabrielle.brown@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3051, 'Harry Wilson', 303, 'harry.wilson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3052, 'Isabella King', 303, 'isabella.king@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3053, 'James Turner', 303, 'james.turner@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3054, 'Katherine Hill', 303, 'katherine.hill@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3055, 'Leo Martin', 303, 'leo.martin@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3056, 'Mia Lewis', 303, 'mia.lewis@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3057, 'Nathan White', 303, 'nathan.white@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3058, 'Olivia Young', 303, 'olivia.young@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3059, 'Paul Walker', 303, 'paul.walker@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (3060, 'Quinn Adams', 303, 'quinn.adams@example.com') ON CONFLICT (emp_id) DO NOTHING;
+
+-- DWIT - Wireless (20 employees)
+INSERT INTO employees VALUES (4001, 'Michael Scott', 401, 'michael.scott@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4002, 'Rachel Green', 401, 'rachel.green@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4003, 'Tyler Johnson', 401, 'tyler.johnson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4004, 'Uma Brown', 401, 'uma.brown@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4005, 'Victor Thompson', 401, 'victor.thompson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4006, 'Wendy Garcia', 401, 'wendy.garcia@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4007, 'Xavier Hall', 401, 'xavier.hall@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4008, 'Yolanda Morgan', 401, 'yolanda.morgan@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4009, 'Zachary Perez', 401, 'zachary.perez@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4010, 'Alex Rodriguez', 401, 'alex.rodriguez@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4011, 'Brenda Sanders', 401, 'brenda.sanders@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4012, 'Chris Turner', 401, 'chris.turner@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4013, 'Denise White', 401, 'denise.white@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4014, 'Evan Young', 401, 'evan.young@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4015, 'Fiona Adams', 401, 'fiona.adams@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4016, 'George Baker', 401, 'george.baker@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4017, 'Hannah Clark', 401, 'hannah.clark@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4018, 'Isaac Davis', 401, 'isaac.davis@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4019, 'Jessica Evans', 401, 'jessica.evans@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4020, 'Kevin Foster', 401, 'kevin.foster@example.com') ON CONFLICT (emp_id) DO NOTHING;
+
+-- DWIT - Information Technology (20 employees)
+INSERT INTO employees VALUES (4021, 'Laura Green', 402, 'laura.green@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4022, 'Michael Harris', 402, 'michael.harris@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4023, 'Natalie Jackson', 402, 'natalie.jackson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4024, 'Oliver King', 402, 'oliver.king@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4025, 'Paula Lee', 402, 'paula.lee@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4026, 'Quentin Moore', 402, 'quentin.moore@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4027, 'Rebecca Nelson', 402, 'rebecca.nelson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4028, 'Steven Peters', 402, 'steven.peters@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4029, 'Tina Roberts', 402, 'tina.roberts@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4030, 'Ursula Scott', 402, 'ursula.scott@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4031, 'Victor Turner', 402, 'victor.turner@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4032, 'Wanda White', 402, 'wanda.white@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4033, 'Xavier Young', 402, 'xavier.young@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4034, 'Yolanda Brown', 402, 'yolanda.brown@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4035, 'Zachary Clark', 402, 'zachary.clark@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4036, 'Amy Davis', 402, 'amy.davis@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4037, 'Brandon Evans', 402, 'brandon.evans@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4038, 'Claire Foster', 402, 'claire.foster@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4039, 'Derek Green', 402, 'derek.green@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4040, 'Ella Harris', 402, 'ella.harris@example.com') ON CONFLICT (emp_id) DO NOTHING;
+
+-- DWIT - IoT (20 employees)
+INSERT INTO employees VALUES (4041, 'Frank Johnson', 403, 'frank.johnson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4042, 'Grace Kim', 403, 'grace.kim@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4043, 'Henry Lee', 403, 'henry.lee@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4044, 'Isabel Martinez', 403, 'isabel.martinez@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4045, 'Jack Nelson', 403, 'jack.nelson@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4046, 'Kelly Owens', 403, 'kelly.owens@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4047, 'Liam Parker', 403, 'liam.parker@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4048, 'Monica Quinn', 403, 'monica.quinn@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4049, 'Nathan Roberts', 403, 'nathan.roberts@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4050, 'Olivia Scott', 403, 'olivia.scott@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4051, 'Paul Turner', 403, 'paul.turner@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4052, 'Quinn Walker', 403, 'quinn.walker@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4053, 'Rachel Young', 403, 'rachel.young@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4054, 'Steven Adams', 403, 'steven.adams@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4055, 'Teresa Brown', 403, 'teresa.brown@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4056, 'Ulysses Clark', 403, 'ulysses.clark@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4057, 'Victoria Davis', 403, 'victoria.davis@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4058, 'William Evans', 403, 'william.evans@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4059, 'Xavier Foster', 403, 'xavier.foster@example.com') ON CONFLICT (emp_id) DO NOTHING;
+INSERT INTO employees VALUES (4060, 'Yvonne Green', 403, 'yvonne.green@example.com') ON CONFLICT (emp_id) DO NOTHING;
+
+-- Directors
+INSERT INTO directors VALUES (1, 'Dr. Andrew Reynolds', 'DRDL Director', NULL, DATE '2015-01-01', NULL) ON CONFLICT (director_id) DO NOTHING;
+INSERT INTO directors VALUES (2, 'Dr. Betty Clark', 'DIT Director', 1, DATE '2018-06-01', NULL) ON CONFLICT (director_id) DO NOTHING;
+INSERT INTO directors VALUES (3, 'Mr. Charles King', 'DOI Director', 2, DATE '2017-03-15', NULL) ON CONFLICT (director_id) DO NOTHING;
+INSERT INTO directors VALUES (4, 'Ms. Diane Lee', 'DOVI Director', 3, DATE '2019-09-01', NULL) ON CONFLICT (director_id) DO NOTHING;
+INSERT INTO directors VALUES (5, 'Mr. Edward Brown', 'DWIT Director', 4, DATE '2016-11-30', NULL) ON CONFLICT (director_id) DO NOTHING;
+
+-- Department Heads
+INSERT INTO department_heads VALUES (1, 1001, 101, DATE '2019-05-20', NULL) ON CONFLICT (head_id) DO NOTHING;
+INSERT INTO department_heads VALUES (2, 1027, 102, DATE '2020-01-10', NULL) ON CONFLICT (head_id) DO NOTHING;
+INSERT INTO department_heads VALUES (3, 1041, 103, DATE '2017-10-12', NULL) ON CONFLICT (head_id) DO NOTHING;
+INSERT INTO department_heads VALUES (4, 2001, 201, DATE '2018-05-05', NULL) ON CONFLICT (head_id) DO NOTHING;
+INSERT INTO department_heads VALUES (5, 2021, 202, DATE '2019-06-03', NULL) ON CONFLICT (head_id) DO NOTHING;
+INSERT INTO department_heads VALUES (6, 2041, 203, DATE '2020-03-20', NULL) ON CONFLICT (head_id) DO NOTHING;
+INSERT INTO department_heads VALUES (7, 3001, 301, DATE '2017-08-18', NULL) ON CONFLICT (head_id) DO NOTHING;
+INSERT INTO department_heads VALUES (8, 3021, 302, DATE '2018-09-27', NULL) ON CONFLICT (head_id) DO NOTHING;
+INSERT INTO department_heads VALUES (9, 3041, 303, DATE '2019-07-12', NULL) ON CONFLICT (head_id) DO NOTHING;
+INSERT INTO department_heads VALUES (10, 4001, 401, DATE '2016-11-03', NULL) ON CONFLICT (head_id) DO NOTHING;
+INSERT INTO department_heads VALUES (11, 4021, 402, DATE '2017-04-01', NULL) ON CONFLICT (head_id) DO NOTHING;
+INSERT INTO department_heads VALUES (12, 4041, 403, DATE '2018-10-07', NULL) ON CONFLICT (head_id) DO NOTHING;
+
+-- Employee History
+INSERT INTO employee_history VALUES (1, 1001, 'Junior Software Engineer', 101, DATE '2015-03-01', DATE '2017-12-31') ON CONFLICT (history_id) DO NOTHING;
+INSERT INTO employee_history VALUES (2, 1001, 'Software Engineer', 101, DATE '2018-01-01', DATE '2020-06-30') ON CONFLICT (history_id) DO NOTHING;
+INSERT INTO employee_history VALUES (3, 1001, 'Senior Software Engineer', 101, DATE '2020-07-01', NULL) ON CONFLICT (history_id) DO NOTHING;
+
+INSERT INTO employee_history VALUES (4, 1027, 'Network Analyst', 102, DATE '2016-05-10', DATE '2018-05-20') ON CONFLICT (history_id) DO NOTHING;
+INSERT INTO employee_history VALUES (5, 1027, 'Network Security Specialist', 102, DATE '2018-05-21', NULL) ON CONFLICT (history_id) DO NOTHING;
+
+INSERT INTO employee_history VALUES (6, 1041, 'Systems Administrator', 103, DATE '2014-02-16', DATE '2019-09-30') ON CONFLICT (history_id) DO NOTHING;
+INSERT INTO employee_history VALUES (7, 1041, 'Senior Systems Administrator', 103, DATE '2019-10-01', NULL) ON CONFLICT (history_id) DO NOTHING;
+
+-- Create View for easier employee info retrieval
+CREATE OR REPLACE VIEW employee_details_vw AS
+SELECT 
+    e.emp_id AS "Employee ID",
+    e.name AS "Employee Name",
+    eh.role AS "Designation",
+    d.name AS "Director",
+    dirc.name AS "Directorate",
+    dep.name AS "Division",
+    eh.start_date AS "Joining Date",
+    eh.end_date AS "End Date"
+FROM 
+    employees e
+    LEFT JOIN employee_history eh ON e.emp_id = eh.emp_id AND eh.end_date IS NULL
+    LEFT JOIN departments dep ON e.department_id = dep.department_id
+    LEFT JOIN directors d ON dep.directorate_id = d.directorate_id AND d.end_date IS NULL
+    LEFT JOIN directorates dirc ON dep.directorate_id = dirc.directorate_id;
